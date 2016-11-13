@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.michal.myapplication">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StartMainActivity"
+            android:label="@string/title_activity_start_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AimMainActivity"
+            android:label="@string/title_activity_aim_main"
+            android:parentActivityName=".StartMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michal.myapplication.StartMainActivity" />
+        </activity>
+        <activity
+            android:name=".HealthActivity"
+            android:label="@string/title_activity_health"
+            android:parentActivityName=".AimMainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michal.myapplication.AimMainActivity" />
+        </activity>
+        <activity
+            android:name=".PersonalActivity"
+            android:label="@string/title_activity_personal"
+            android:parentActivityName=".HealthActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michal.myapplication.HealthActivity" />
+        </activity>
+        <activity
+            android:name=".LvlActivity"
+            android:label="@string/title_activity_lvl"
+            android:parentActivityName=".HealthActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.michal.myapplication.HealthActivity" />
+        </activity>
+    </application>
+
+</manifest>

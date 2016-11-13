@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="name">Imie</string>
+    <string name="pass">Hasło</string>
+    <string name="aim">Cel</string>
+    <string name="reduction">Redukcja</string>
+    <string name="keep_weight">Utrzymanie wagi</string>
+    <string name="build_mass">Zwiększ wagę</string>
+    <string name="healty">Stan zdrowia</string>
+    <string name="healty_man">Zdrowy</string>
+    <string name="Diabets">Diabetyk</string>
+    <string name="Fat">Otyłość</string>
+    <string name="type_diet">Typ diety</string>
+    <string name="H_carbo">Wysokowęglowodanowa</string>
+    <string name="L_carbo">Niskowęglowodanowa</string>
+    <string name="keto">Ketogeniczna</string>
+    <string name="typ_diabets">Typ cukrzycy</string>
+    <string name="typ_1">Typ 1</string>
+    <string name="typ_2">Typ 2</string>
+    <string name="weight">Waga</string>
+    <string name="height">Wzrost</string>
+    <string name="age">Wiek</string>
+    <string name="lvl_activity">Poziom aktywności</string>
+    <string name="low">Mała aktywność</string>
+    <string name="medium">Średnia aktywność</string>
+    <string name="big">Duża aktywność</string>
+    <string name="sex">Płeć</string>
+    <string name="man">Mężczyzna</string>
+    <string name="woman">Kobieta</string>
+    <string name="title_activity_start_main">StartMainActivity</string>
+    <string name="title_activity_aim_main">AimMainActivity</string>
+    <string name="title_activity_health">HealthActivity</string>
+    <string name="title_activity_personal">PersonalActivity</string>
+    <string name="title_activity_lvl">LvlActivity</string>
+
+
+</resources>
