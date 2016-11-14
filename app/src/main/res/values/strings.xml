@@ -19,9 +19,9 @@
     <string name="typ_diabets">Typ cukrzycy</string>
     <string name="typ_1">Typ 1</string>
     <string name="typ_2">Typ 2</string>
-    <string name="weight">Waga</string>
-    <string name="height">Wzrost</string>
-    <string name="age">Wiek</string>
+    <string name="weight">Waga : 75 kg</string>
+    <string name="height">Wzrost : 175 cm</string>
+    <string name="age">Wiek : 20 lat</string>
     <string name="lvl_activity">Poziom aktywności</string>
     <string name="low">Mała aktywność</string>
     <string name="medium">Średnia aktywność</string>
