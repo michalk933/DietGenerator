@@ -27,6 +27,9 @@ public class StartMainActivity extends AppCompatActivity {
         nameEditText = (EditText)findViewById(R.id.nameEditText);
         passEditText = (EditText)findViewById(R.id.passEditText);
 
+        //final UserCreate userCreate = getUserCreate().get;
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,5 +58,9 @@ public class StartMainActivity extends AppCompatActivity {
         return String.valueOf(day +":"+month+":"+year);
     }
 
+
+    private MainActivity getUserCreate() {
+        return (MainActivity)get
+    }
 
 }
