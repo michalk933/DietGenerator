@@ -3,6 +3,10 @@ package com.example.michal.myapplication;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,6 +35,38 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
 
 
+
+        try{
+            Toast.makeText(getApplicationContext(),"1",Toast.LENGTH_SHORT).show();
+            SQLiteOpenHelper hh = new DB_User(this);
+            Toast.makeText(getApplicationContext(),"2",Toast.LENGTH_SHORT).show();
+            SQLiteDatabase db = hh.getReadableDatabase();
+            Toast.makeText(getApplicationContext(),"3",Toast.LENGTH_SHORT).show();
+            Cursor cur = db.query("USER", new String[]{"NAME", "PASS"}, "AIM_DIET = ?", new String[]{"Redukcja"}, null, null, null);
+            //getHaslazDB(cur);
+
+            Toast.makeText(getApplicationContext(),"4",Toast.LENGTH_SHORT).show();
+            if(cur.moveToFirst()){
+                String n = cur.getString(0);
+                String p = cur.getString(1);
+
+                Toast.makeText(getApplicationContext(),n + " / "+p,Toast.LENGTH_SHORT).show();
+
+            }
+
+            cur.close();
+            db.close();
+
+
+        }catch (SQLiteException e){
+            Toast.makeText(getApplicationContext(), "Błąd bazy dabych", Toast.LENGTH_SHORT).show();
+
+        }
+
+
+
+
+
         if(sharedPreferences.getString("userName","franek").equals("franek") ) {
             Intent intent = new Intent(this, StartMainActivity.class);
             startActivity(intent);
@@ -52,6 +88,22 @@ public class MainActivity extends AppCompatActivity {
     public static UserCreate getUserCreatee(){
         return userCreate;
     }
+
+    /*
+     public void getHaslazDB(Cursor cur){
+        int ktoreHaslo=0;
+        cur.moveToFirst();
+        String[] names = new String[cur.getCount()];
+        while(!cur.isAfterLast()) {
+            names[ktoreHaslo] = cur.getString(cur.getColumnIndex("TXT"));
+            cur.moveToNext();
+            ktoreHaslo++;
+        }
+        losowanieHasla(names);
+
+    }
+     */
+
 
 
 
