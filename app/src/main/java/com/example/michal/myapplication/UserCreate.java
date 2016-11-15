@@ -55,11 +55,14 @@ public class UserCreate {
     public void setSex(int sex){
         this.sex = sex;
     }
-    public void lvlActi(int lvlActi){
+    public void setLvlActi(int lvlActi){
         this.lvlActi = lvlActi;
     }
 
 
+    public String showUser(){
+        return this.name + " - " + this.pass + " - " + this.aim + " - " + this.health + this.weight;
+    }
 
 
 }

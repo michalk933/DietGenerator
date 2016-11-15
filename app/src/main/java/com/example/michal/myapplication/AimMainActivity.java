@@ -31,6 +31,7 @@ public class AimMainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.getUserCreatee().setAim(aim);
                 Intent intent = new Intent(AimMainActivity.this,HealthActivity.class);
                 startActivity(intent);
             }

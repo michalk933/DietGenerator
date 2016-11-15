@@ -27,7 +27,6 @@ public class StartMainActivity extends AppCompatActivity {
         nameEditText = (EditText)findViewById(R.id.nameEditText);
         passEditText = (EditText)findViewById(R.id.passEditText);
 
-        //final UserCreate userCreate = getUserCreate().get;
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -40,7 +39,8 @@ public class StartMainActivity extends AppCompatActivity {
                 if(name.equals("") || pass.equals("")){
                     Toast.makeText(getApplicationContext(),"Uzupełnij pola",Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(getApplicationContext(),calendar,Toast.LENGTH_SHORT).show();
+                    MainActivity.getUserCreatee().setNameuser(name);
+                    MainActivity.getUserCreatee().setPass(pass);
                     Intent intent = new Intent(StartMainActivity.this, AimMainActivity.class);
                     startActivity(intent);
                 }
@@ -58,9 +58,5 @@ public class StartMainActivity extends AppCompatActivity {
         return String.valueOf(day +":"+month+":"+year);
     }
 
-
-    private MainActivity getUserCreate() {
-        return (MainActivity)get
-    }
 
 }

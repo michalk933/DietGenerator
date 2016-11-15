@@ -36,6 +36,10 @@ public class HealthActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.getUserCreatee().setHealth(health);
+                MainActivity.getUserCreatee().setTypDiet(typDiet);
+                MainActivity.getUserCreatee().setTypDiabets(typDiabets);
+
                 Intent intent = new Intent(HealthActivity.this,PersonalActivity.class);
                 startActivity(intent);
             }

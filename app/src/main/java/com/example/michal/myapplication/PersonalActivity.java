@@ -56,6 +56,11 @@ public class PersonalActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MainActivity.getUserCreatee().setAge(age);
+                MainActivity.getUserCreatee().setHeight(height);
+                MainActivity.getUserCreatee().setWeight(weight);
+                MainActivity.getUserCreatee().setSex(sex);
+
                 Intent intent = new Intent(PersonalActivity.this,LvlActivity.class);
                 startActivity(intent);
             }

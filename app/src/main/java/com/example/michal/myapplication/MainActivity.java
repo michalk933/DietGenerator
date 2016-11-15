@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private UserCreate userCreate;
+    private static UserCreate userCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("userName", userCreate.getNameUser());
         editor.apply();
-
-
-
 
 
         if(sharedPreferences.getString("userName","franek").equals("franek") ) {
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public UserCreate getUserCreatee(){
+    public static UserCreate getUserCreatee(){
         return userCreate;
     }
 
