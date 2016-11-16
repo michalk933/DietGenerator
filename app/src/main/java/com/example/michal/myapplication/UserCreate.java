@@ -1,13 +1,18 @@
 package com.example.michal.myapplication;
 
+import android.widget.Toast;
+
 /**
  * Created by michal on 15.11.2016.
  */
 
 public class UserCreate {
 
-    private String name = "franek";
+    DB_User userDataBase;
+
+    private String name;
     private String pass;
+    private String addDate;
     private String aim;
     private String health;
     private String typDiet;
@@ -20,17 +25,18 @@ public class UserCreate {
 
     public UserCreate(){}
 
-
+/*
     public String getNameUser(){
         return this.name;
     }
-
+*/
     public void setNameuser(String name){
         this.name = name;
     }
     public void setPass(String pass){
         this.pass = pass;
     }
+    public void setDateAdd(String date){this.addDate = date; }
     public void setAim(String aim){
         this.aim = aim;
     }
@@ -61,8 +67,28 @@ public class UserCreate {
 
 
     public String showUser(){
-        return this.name + " - " + this.pass + " - " + this.aim + " - " + this.health + this.weight;
+        return this.name + " - " + this.pass + " - " + this.aim + " - " + this.health + " - " +
+                this.typDiet + " - " + this.typDiabets + " - " + this.age + " - " + this.height +" - " + this.weight +
+                " - " + this.sex + " - " + this.lvlActi ;
     }
 
+
+    public void addNewUserDB(){
+        userDataBase = new DB_User(LvlActivity.getAppContext());
+        boolean isAdd = userDataBase.insertNewUser(this.name, this.pass, this.addDate, this.aim, this.health, this.typDiet,
+                this.typDiabets, this.age, this.height, this.weight, this.sex, this.lvlActi);
+        if(isAdd == true){
+            Toast.makeText(LvlActivity.getAppContext(),"DOADNO : "+ showUser() ,Toast.LENGTH_SHORT).show();
+
+        }else if(isAdd == false){
+            Toast.makeText(LvlActivity.getAppContext(),"NIE DODANO",Toast.LENGTH_SHORT).show();
+
+
+        }
+
+
+
+
+    }
 
 }

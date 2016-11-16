@@ -42,9 +42,10 @@ public class DB_User extends SQLiteOpenHelper {
                     + "WEIGHT INTEGER, "
                     + "HEIGHT INTEGER, "
                     + "AGE INTEGER, "
+                    + "SEX INTEGER, "
                     + "LVL_ACTI INTEGER);");
 
-            insetsTest(db,"Janusz","Cebula","15.11.2016","Redukcja","fat","carbo",1,86,178,23,2);
+            insetsTest(db,"Janusz","Cebula","15.11.2016","Redukcja","fat","carbo",1,86,178,23,1,2);
 
             //ID_USE,Imię,Passwod,Data_Konta,Cel_Diety,Stan_Zdrowia,Typ_Diety ,Typ_Cukrzycy,Waga,Wzrost,Wiek,Poziom_Act
 
@@ -53,9 +54,12 @@ public class DB_User extends SQLiteOpenHelper {
         }
 
     }
+
+
+    //Test methot, check using data base
     private static void insetsTest(SQLiteDatabase db,String name,String pass,String date_add,
                                    String aim_diet,String health,String typ_diet,int typ_diabets,
-                                   int weight,int height,int age,int lvl ){
+                                   int weight,int height,int age,int sex, int lvl ){
         ContentValues cv = new ContentValues();
         cv.put("NAME", name);
         cv.put("PASS", pass);
@@ -67,11 +71,42 @@ public class DB_User extends SQLiteOpenHelper {
         cv.put("WEIGHT", weight);
         cv.put("HEIGHT", height);
         cv.put("AGE", age);
+        cv.put("SEX", sex);
         cv.put("LVL_ACTI", lvl);
         db.insert("USER",null,cv);
 
     }
 
+
+    // Hethot add new user into data base
+    public boolean insertNewUser(String name,String pass,String date_add,
+                                 String aim_diet,String health,String typ_diet,int typ_diabets,
+                                 int weight,int height,int age,int sex,int lvl){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("NAME", name);
+        cv.put("PASS", pass);
+        cv.put("DATE_ADD", date_add);
+        cv.put("AIM_DIET", aim_diet);
+        cv.put("HEALTH", health);
+        cv.put("TYP_DIET", typ_diet);
+        cv.put("TYP_DIABETS",typ_diabets);
+        cv.put("WEIGHT", weight);
+        cv.put("HEIGHT", height);
+        cv.put("AGE", age);
+        cv.put("SEX", sex);
+        cv.put("LVL_ACTI", lvl);
+
+        long result = db.insert("USER",null,cv);
+
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 
 }

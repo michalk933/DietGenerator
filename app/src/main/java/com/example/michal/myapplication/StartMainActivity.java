@@ -47,6 +47,7 @@ public class StartMainActivity extends AppCompatActivity {
 
                     MainActivity.getUserCreatee().setNameuser(name);
                     MainActivity.getUserCreatee().setPass(pass);
+                    MainActivity.getUserCreatee().setDateAdd(getTadaAdduser());
 
                     Intent intent = new Intent(StartMainActivity.this, AimMainActivity.class);
                     startActivity(intent);
@@ -64,6 +65,7 @@ public class StartMainActivity extends AppCompatActivity {
 
         return String.valueOf(day +":"+month+":"+year);
     }
+
 
     private void sharedPreferencesCreakteAndChange(String newName,String newPass) {
         sharedPreferences = getSharedPreferences("com.example.michal.myapplication", Context.MODE_PRIVATE);

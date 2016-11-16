@@ -36,14 +36,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Creta class with data user
         userCreate = new UserCreate();
 
+        // get value with sharedPref
         sharedPreferences = getSharedPreferences("com.example.michal.myapplication", Context.MODE_PRIVATE);
         nameSharedPreferences = sharedPreferences.getString("userName","");
         passSharedPreferences = sharedPreferences.getString("userPass","");
-        Toast.makeText(getApplicationContext(), nameSharedPreferences + " name in MainActivity" + passSharedPreferences + "to haslo", Toast.LENGTH_SHORT).show();
 
-
+        //Inicialize Data base
         try{
             SQLiteOpenHelper hh = new DB_User(this);
             SQLiteDatabase db = hh.getReadableDatabase();
@@ -53,24 +54,19 @@ public class MainActivity extends AppCompatActivity {
                 nameWitheDB = cur.getString(0);
                 passWithDB = cur.getString(1);
             }
-
             cur.close();
             db.close();
 
-
         }catch (SQLiteException e){
             Toast.makeText(getApplicationContext(), "Błąd bazy dabych", Toast.LENGTH_SHORT).show();
-
         }
 
-
-
-
-
+        // User has got account
         if(nameSharedPreferences.equals(nameWitheDB) && passSharedPreferences.equals(passWithDB) ) {
             Toast.makeText(getApplicationContext(),nameWitheDB + "  =  "+ nameSharedPreferences + " / " +passWithDB + "  =  "+ passSharedPreferences + "nie odpali bo już jest to w sys",Toast.LENGTH_SHORT).show();
-            //Intent intent = new Intent(this, StartMainActivity.class);
-            //startActivity(intent);
+
+
+            // User hasn't got account
         }else if(!nameSharedPreferences.equals(nameWitheDB) && !passSharedPreferences.equals(passWithDB)) {
             Toast.makeText(getApplicationContext(),nameWitheDB + "  !=  "+ nameSharedPreferences + " i halo :" + passWithDB + "  !=  "+ passSharedPreferences,Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StartMainActivity.class);

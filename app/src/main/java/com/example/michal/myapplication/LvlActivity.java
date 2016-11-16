@@ -1,5 +1,6 @@
 package com.example.michal.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,8 @@ public class LvlActivity extends AppCompatActivity {
     private RadioGroup lvlRadioGrup;
     private int lvlActi = 1;
 
+    private static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +27,7 @@ public class LvlActivity extends AppCompatActivity {
         lvlRadioGrup = (RadioGroup)findViewById(R.id.lvlRadioGrup);
         lvlRadioGrup.setOnCheckedChangeListener(changeListenerRadioGrup);
 
+        LvlActivity.context = getApplicationContext();
 
 
 
@@ -32,6 +36,7 @@ public class LvlActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MainActivity.getUserCreatee().setLvlActi(lvlActi);
+                MainActivity.getUserCreatee().addNewUserDB();
                 Toast.makeText(getApplicationContext(),MainActivity.getUserCreatee().showUser(),Toast.LENGTH_SHORT).show();
 
 
@@ -56,5 +61,10 @@ public class LvlActivity extends AppCompatActivity {
             }
         }
     };
+
+
+    public static Context getAppContext() {
+        return LvlActivity.context;
+    }
 
 }
