@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,13 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static UserCreate userCreate;
+    private String nameWitheDB;
+    private String passWithDB;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private String nameSharedPreferences;
+    private String passSharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,31 +35,23 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         userCreate = new UserCreate();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("userName", userCreate.getNameUser());
-        editor.apply();
-
+        sharedPreferences = getSharedPreferences("com.example.michal.myapplication", Context.MODE_PRIVATE);
+        nameSharedPreferences = sharedPreferences.getString("userName","");
+        passSharedPreferences = sharedPreferences.getString("userPass","");
+        Toast.makeText(getApplicationContext(), nameSharedPreferences + " name in MainActivity" + passSharedPreferences + "to haslo", Toast.LENGTH_SHORT).show();
 
 
         try{
-            Toast.makeText(getApplicationContext(),"1",Toast.LENGTH_SHORT).show();
             SQLiteOpenHelper hh = new DB_User(this);
-            Toast.makeText(getApplicationContext(),"2",Toast.LENGTH_SHORT).show();
             SQLiteDatabase db = hh.getReadableDatabase();
-            Toast.makeText(getApplicationContext(),"3",Toast.LENGTH_SHORT).show();
             Cursor cur = db.query("USER", new String[]{"NAME", "PASS"}, "AIM_DIET = ?", new String[]{"Redukcja"}, null, null, null);
-            //getHaslazDB(cur);
 
-            Toast.makeText(getApplicationContext(),"4",Toast.LENGTH_SHORT).show();
             if(cur.moveToFirst()){
-                String n = cur.getString(0);
-                String p = cur.getString(1);
-
-                Toast.makeText(getApplicationContext(),n + " / "+p,Toast.LENGTH_SHORT).show();
-
+                nameWitheDB = cur.getString(0);
+                passWithDB = cur.getString(1);
             }
 
             cur.close();
@@ -67,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if(sharedPreferences.getString("userName","franek").equals("franek") ) {
+        if(nameSharedPreferences.equals(nameWitheDB) && passSharedPreferences.equals(passWithDB) ) {
+            Toast.makeText(getApplicationContext(),nameWitheDB + "  =  "+ nameSharedPreferences + " / " +passWithDB + "  =  "+ passSharedPreferences + "nie odpali bo już jest to w sys",Toast.LENGTH_SHORT).show();
+            //Intent intent = new Intent(this, StartMainActivity.class);
+            //startActivity(intent);
+        }else if(!nameSharedPreferences.equals(nameWitheDB) && !passSharedPreferences.equals(passWithDB)) {
+            Toast.makeText(getApplicationContext(),nameWitheDB + "  !=  "+ nameSharedPreferences + " i halo :" + passWithDB + "  !=  "+ passSharedPreferences,Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StartMainActivity.class);
             startActivity(intent);
-        }else {
-            Toast.makeText(getApplicationContext(),"nie wiem",Toast.LENGTH_SHORT).show();
         }
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -88,23 +90,6 @@ public class MainActivity extends AppCompatActivity {
     public static UserCreate getUserCreatee(){
         return userCreate;
     }
-
-    /*
-     public void getHaslazDB(Cursor cur){
-        int ktoreHaslo=0;
-        cur.moveToFirst();
-        String[] names = new String[cur.getCount()];
-        while(!cur.isAfterLast()) {
-            names[ktoreHaslo] = cur.getString(cur.getColumnIndex("TXT"));
-            cur.moveToNext();
-            ktoreHaslo++;
-        }
-        losowanieHasla(names);
-
-    }
-     */
-
-
 
 
     @Override

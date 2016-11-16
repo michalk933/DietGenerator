@@ -1,6 +1,8 @@
 package com.example.michal.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +18,8 @@ public class StartMainActivity extends AppCompatActivity {
 
     EditText nameEditText, passEditText;
     String name, pass, calendar;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +43,11 @@ public class StartMainActivity extends AppCompatActivity {
                 if(name.equals("") || pass.equals("")){
                     Toast.makeText(getApplicationContext(),"Uzupełnij pola",Toast.LENGTH_SHORT).show();
                 }else {
+                    sharedPreferencesCreakteAndChange(name,pass);
+
                     MainActivity.getUserCreatee().setNameuser(name);
                     MainActivity.getUserCreatee().setPass(pass);
+
                     Intent intent = new Intent(StartMainActivity.this, AimMainActivity.class);
                     startActivity(intent);
                 }
@@ -57,6 +64,16 @@ public class StartMainActivity extends AppCompatActivity {
 
         return String.valueOf(day +":"+month+":"+year);
     }
+
+    private void sharedPreferencesCreakteAndChange(String newName,String newPass) {
+        sharedPreferences = getSharedPreferences("com.example.michal.myapplication", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString("userName", newName);
+        editor.putString("userPass", newPass);
+        editor.commit();
+    }
+
+
 
 
 }

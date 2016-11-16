@@ -8,11 +8,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class HealthActivity extends AppCompatActivity {
 
     private RadioGroup healthRadioGrup,typDietRadioGrup,typDiabetsRadioGrup;
+    private RadioButton typOneRadioButton, typTwoRadioButton,carboHRadioButton,carboLRadioButton,ketoRadioButton;
     private String health = "zdrowy";
     private String typDiet = "lowCarbo";
     private int typDiabets = 1;
@@ -28,9 +30,17 @@ public class HealthActivity extends AppCompatActivity {
         typDietRadioGrup = (RadioGroup)findViewById(R.id.typDietRadioGrup);
         typDiabetsRadioGrup = (RadioGroup)findViewById(R.id.typDiabetsRadioGrup);
 
+        typOneRadioButton = (RadioButton)findViewById(R.id.typOneRadioButton);
+        typTwoRadioButton = (RadioButton)findViewById(R.id.typTwoRadioButton);
+        carboHRadioButton = (RadioButton)findViewById(R.id.carboHRadioButton);
+        carboLRadioButton = (RadioButton)findViewById(R.id.carboLRadioButton);
+        ketoRadioButton = (RadioButton)findViewById(R.id.ketoRadioButton);
+
         healthRadioGrup.setOnCheckedChangeListener(checkedlistenerHealt);
         typDietRadioGrup.setOnCheckedChangeListener(checkedlistenerTypDiet);
         typDiabetsRadioGrup.setOnCheckedChangeListener(checkedlistenerTypDiabets);
+
+        changeTypDiet(false);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,12 +64,18 @@ public class HealthActivity extends AppCompatActivity {
             switch (checkedId){
                 case R.id.healthManRadioButton:
                     health = "zdrowy";
+                    changeDiabets(false);
+                    changeTypDiet(true);
                     break;
                 case R.id.diabetsRadioButton:
                     health = "diabetyk";
+                    changeDiabets(true);
+                    changeTypDiet(false);
                     break;
                 case R.id.fatRadioButton:
                     health = "otyły";
+                    changeTypDiet(true);
+                    changeDiabets(false);
                     break;
             }
         }
@@ -101,6 +117,17 @@ public class HealthActivity extends AppCompatActivity {
     };
 
 
+
+    private void changeDiabets(boolean enable){
+        typOneRadioButton.setEnabled(enable);
+        typTwoRadioButton.setEnabled(enable);
+    }
+
+    private void changeTypDiet(boolean enable){
+        carboHRadioButton.setEnabled(enable);
+        carboLRadioButton.setEnabled(enable);
+        ketoRadioButton.setEnabled(enable);
+    }
 
 
 
