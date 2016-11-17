@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class LvlActivity extends AppCompatActivity {
     private RadioGroup lvlRadioGrup;
-    private int lvlActi = 1;
+    private int lvlActi = 2;
 
     private static Context context;
 
@@ -29,15 +29,14 @@ public class LvlActivity extends AppCompatActivity {
 
         LvlActivity.context = getApplicationContext();
 
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getAppContext(),String.valueOf(MainActivity.getUserCreatee().kcalDay()),Toast.LENGTH_LONG).show();
                 MainActivity.getUserCreatee().setLvlActi(lvlActi);
                 MainActivity.getUserCreatee().addNewUserDB();
+                
+                MainActivity.getUserCreatee().getCMP();
                 Toast.makeText(getApplicationContext(),MainActivity.getUserCreatee().showUser(),Toast.LENGTH_SHORT).show();
 
 

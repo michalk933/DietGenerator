@@ -24,6 +24,12 @@ public class UserCreate {
     private int sex;
     private int lvlActi;
 
+    public int solve;
+    public int b;
+    public int t;
+    public int ww;
+
+
     public UserCreate(){}
 
 /*
@@ -84,9 +90,25 @@ public class UserCreate {
         }else if(isAdd == false){
             Toast.makeText(LvlActivity.getAppContext(),"NIE DODANO",Toast.LENGTH_SHORT).show();
 
-
         }
     }
+
+    public int getCMP(){
+        int cmp = 0;
+
+        if( this.health.equals("zdrowy") || this.health.equals("otyły") ){//health or fat
+            int bmr = getBMR();
+            cmp = bmr + getNEAT() + getTEF(bmr) + getTEA(bmr);
+        }else if(this.health.equals("diabetyk")){// Diabets
+            cmp = this.weight * getBMIandActivity();
+        }
+        Toast.makeText(LvlActivity.getAppContext(),String.valueOf(cmp),Toast.LENGTH_SHORT).show();
+        return cmp;
+    }
+
+
+
+
 
     // if methoth return true, user dont have diabets
     // if methods return false, user have diabets
@@ -105,97 +127,76 @@ public class UserCreate {
     }
 
 
-    public int kcalDay() {
-        double kcal = 0;
-        int kcalOfDay;
-        double bmi;
+    private int getBMR(){
+        int kcal = 0;
 
-        if (isHealt()) {
-
-            if (this.sex == 0) {
-                kcal = (665.09 + ((9.56 * this.weight) * 1.1) + ((1.85 * this.height) * lvl()) + (4.67 * this.age)) + 300;
-            }else if(this.sex == 1) {
-                kcal = (66.47 + ((13.75 * this.weight) * 1.1) + ((5 * this.height) * lvl()) + (6.75 * this.age)) + 400;
-            }
-
-        }else if(!isHealt()){
-
-            bmi = this.weight / (this.height * this.height);
-            int kcalWihtBmi = bmiRange(bmi);
-            kcal = weight * kcalWihtBmi;
-
+        if(this.sex == 0){//Woman
+            //665.09 + [9.56 x M(kg)] + [1.85 x h(cm)] – [4.67 x W(lata)]
+            kcal = (int)(665.09 + (9.56 * this.weight) + (1.85 * this.height) - (4.67 * this.age));
+        }else{//Man
+            //66.47 + [13.75 x M(kg)] + [5 x h(cm)] – [6.75 x W(lata)]
+            kcal = (int)(66.47 +(13.75 * this.weight) + (5 * this.height) - (6.75 * this.age));
         }
-
-        Double parser = new Double(kcal);
-        kcalOfDay = parser.intValue();
-
-        return kcalOfDay;
-
+        return kcal;
     }
 
-    public double lvl() {
-        double solve = 1.3;
-        if (this.lvlActi == 1) {
-            solve = 1.3;
-        } else if (this.lvlActi == 2) {
-            solve = 1.3;
-        } else if (this.lvlActi == 3) {
-            solve = 1.5;
-        }
-        return solve;
+    //Method check level activity user and return kcal
+    private int getNEAT(){
+        return (this.lvlActi == 1 || this.lvlActi == 2) ? 300 : 400;
     }
 
-    public int bmiRange(double bmi) {
-        Double d = new Double(bmi);
-        int bmiRange = d.intValue();
-        int kcalWihtBmi = 35;
 
-        if (bmiRange < 18) {
-            kcalWihtBmi = 40;
-        } else if (bmiRange > 18 && bmiRange < 25) {
-            kcalWihtBmi = 35;
-
-        } else if (bmiRange > 25) {
-            kcalWihtBmi = 30;
-        }
-
-        activ(kcalWihtBmi);
-        return kcalWihtBmi;
+    private int getTEF(int bmr){
+        return (int)(bmr * 0.1);
     }
 
-    public int activ(int kcalWihtBmi) {
-        int kcalWithActivity = 35;
-        switch (this.lvlActi) {
-            case 1:
-                kcalWithActivity = 30;
-                break;
-            case 2:
-                kcalWithActivity = 35;
-                break;
-            case 3:
-                kcalWithActivity = 34;
-                break;
-        }
-        return kcalFinall(kcalWihtBmi, kcalWithActivity);
+    private int getTEA(int bmr){
+        return (int)((this.lvlActi == 1 || this.lvlActi == 2) ? (bmr * 0.3) : (bmr * 0.5));
     }
 
-    public int kcalFinall(int kcalWihtBmi, int kcalWithActivity) {
-        int kclaFinall = 35;
 
-        if (kcalWihtBmi == 30 && kcalWithActivity == 40) {
-            kclaFinall = 35;
-
-        } else if (kcalWihtBmi == 30 || kcalWithActivity == 30) {
-            kclaFinall = 30;
-
-        } else if (kcalWihtBmi == 40 || kcalWithActivity == 40) {
-            kclaFinall = 40;
-        } else {
-            kclaFinall = 35;
-
-        }
-        return kclaFinall;
+    //BMI = Masa ciała (kg) / Wzrost (m)
+    private int getBMI(){
+        return (int)(this.weight / Math.pow(this.height,2));
     }
+
+    private int getPointerBMI(){
+        int plusKcalDiabets = 0;
+        int bmi = getBMI();
+
+        if( bmi < 18){
+            plusKcalDiabets = 1;
+        }else if( bmi >= 18 && bmi <= 25 ){
+            plusKcalDiabets = 2;
+        }else if( bmi > 15 ){
+            plusKcalDiabets = 3;
+        }
+
+        return plusKcalDiabets;
+    }
+
+    private int getBMIandActivity(){
+        int bmi = getPointerBMI();
+        int activ = this.lvlActi;
+        int result = 0;
+
+        if( (bmi == activ) && ( bmi == 1 || bmi == 3) ){
+            result = 35;
+        }else if(bmi == 1 ){
+            result = 40;
+        }else if( bmi == 2 ){
+            result = 35;
+        }else if( bmi == 3 ){
+            result = 30;
+        }
+
+        return result;
+    }
+
+
+
+
+
 
 
 }
