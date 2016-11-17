@@ -1,5 +1,6 @@
 package com.example.michal.myapplication;
 
+import android.renderscript.Double2;
 import android.widget.Toast;
 
 /**
@@ -87,10 +88,114 @@ public class UserCreate {
         }
     }
 
+    // if methoth return true, user dont have diabets
+    // if methods return false, user have diabets
+    private boolean isHealt(){
+        boolean healhtOrDiabets = true;
+        if(this.health.equals("zdrowy")){
+            healhtOrDiabets = true;
+
+        }else if(this.health.equals("diabetyk")){
+            healhtOrDiabets = false;
+
+        }else{
+            healhtOrDiabets = true;
+        }
+        return healhtOrDiabets;
+    }
 
 
+    public int kcalDay() {
+        double kcal = 0;
+        int kcalOfDay;
+        double bmi;
 
+        if (isHealt()) {
 
+            if (this.sex == 0) {
+                kcal = (665.09 + ((9.56 * this.weight) * 1.1) + ((1.85 * this.height) * lvl()) + (4.67 * this.age)) + 300;
+            }else if(this.sex == 1) {
+                kcal = (66.47 + ((13.75 * this.weight) * 1.1) + ((5 * this.height) * lvl()) + (6.75 * this.age)) + 400;
+            }
+
+        }else if(!isHealt()){
+
+            bmi = this.weight / (this.height * this.height);
+            int kcalWihtBmi = bmiRange(bmi);
+            kcal = weight * kcalWihtBmi;
+
+        }
+
+        Double parser = new Double(kcal);
+        kcalOfDay = parser.intValue();
+
+        return kcalOfDay;
+
+    }
+
+    public double lvl() {
+        double solve = 1.3;
+        if (this.lvlActi == 1) {
+            solve = 1.3;
+        } else if (this.lvlActi == 2) {
+            solve = 1.3;
+        } else if (this.lvlActi == 3) {
+            solve = 1.5;
+        }
+        return solve;
+    }
+
+    public int bmiRange(double bmi) {
+        Double d = new Double(bmi);
+        int bmiRange = d.intValue();
+        int kcalWihtBmi = 35;
+
+        if (bmiRange < 18) {
+            kcalWihtBmi = 40;
+        } else if (bmiRange > 18 && bmiRange < 25) {
+            kcalWihtBmi = 35;
+
+        } else if (bmiRange > 25) {
+            kcalWihtBmi = 30;
+        }
+
+        activ(kcalWihtBmi);
+        return kcalWihtBmi;
+    }
+
+    public int activ(int kcalWihtBmi) {
+        int kcalWithActivity = 35;
+        switch (this.lvlActi) {
+            case 1:
+                kcalWithActivity = 30;
+                break;
+            case 2:
+                kcalWithActivity = 35;
+                break;
+            case 3:
+                kcalWithActivity = 34;
+                break;
+        }
+        return kcalFinall(kcalWihtBmi, kcalWithActivity);
+    }
+
+    public int kcalFinall(int kcalWihtBmi, int kcalWithActivity) {
+        int kclaFinall = 35;
+
+        if (kcalWihtBmi == 30 && kcalWithActivity == 40) {
+            kclaFinall = 35;
+
+        } else if (kcalWihtBmi == 30 || kcalWithActivity == 30) {
+            kclaFinall = 30;
+
+        } else if (kcalWihtBmi == 40 || kcalWithActivity == 40) {
+            kclaFinall = 40;
+        } else {
+            kclaFinall = 35;
+
+        }
+        return kclaFinall;
+    }
 
 
 }

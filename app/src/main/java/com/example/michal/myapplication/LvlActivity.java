@@ -35,6 +35,7 @@ public class LvlActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getAppContext(),String.valueOf(MainActivity.getUserCreatee().kcalDay()),Toast.LENGTH_LONG).show();
                 MainActivity.getUserCreatee().setLvlActi(lvlActi);
                 MainActivity.getUserCreatee().addNewUserDB();
                 Toast.makeText(getApplicationContext(),MainActivity.getUserCreatee().showUser(),Toast.LENGTH_SHORT).show();
@@ -50,13 +51,13 @@ public class LvlActivity extends AppCompatActivity {
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             switch (checkedId){
                 case R.id.lowRadioButton:
-                    lvlActi = 0;
-                    break;
-                case R.id.mediumRadioButton:
                     lvlActi = 1;
                     break;
-                case R.id.bigRadioButton:
+                case R.id.mediumRadioButton:
                     lvlActi = 2;
+                    break;
+                case R.id.bigRadioButton:
+                    lvlActi = 3;
                     break;
             }
         }
