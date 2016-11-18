@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class UserCreate {
 
-    DB_User userDataBase;
+    private DB_User userDataBase;
 
     private String name;
     private String pass;
@@ -23,6 +23,7 @@ public class UserCreate {
     private int weight;
     private int sex;
     private int lvlActi;
+    private int kcal;
 
     public int solve;
     public int b;
@@ -32,11 +33,7 @@ public class UserCreate {
 
     public UserCreate(){}
 
-/*
-    public String getNameUser(){
-        return this.name;
-    }
-*/
+
     public void setNameuser(String name){
         this.name = name;
     }
@@ -71,29 +68,88 @@ public class UserCreate {
     public void setLvlActi(int lvlActi){
         this.lvlActi = lvlActi;
     }
+    public void setkcal(int newKcal){this.kcal = newKcal;}
+
+    public String getNameuser(){
+        return this.name;
+    }
+    public String getPass(){
+        return this.pass;
+    }
+    public String getDateAdd(){return this.addDate; }
+    public String getAim(){
+        return this.aim;
+    }
+    public String getHealth(){
+        return this.health;
+    }
+    public String getTypDiet(){
+        return this.typDiet;
+    }
+    public int getTypDiabets(){
+        return this.typDiabets;
+    }
+    public int getAge(){
+        return this.age;
+    }
+    public int getHeight(){
+        return this.height;
+    }
+    public int getWeight(){
+        return this.weight;
+    }
+    public int getSex(){
+        return this.sex;
+    }
+    public int getLvlActi(){return this.lvlActi;}
+    public int getKcal(){return this.kcal;}
+
+
+
 
 
     public String showUser(){
         return this.name + " - " + this.pass + " - " + this.aim + " - " + this.health + " - " +
                 this.typDiet + " - " + this.typDiabets + " - " + this.age + " - " + this.height +" - " + this.weight +
-                " - " + this.sex + " - " + this.lvlActi ;
+                " - " + this.sex + " - " + this.lvlActi + " - "+ this.kcal;
     }
 
 
     public void addNewUserDB(){
         userDataBase = new DB_User(LvlActivity.getAppContext());
         boolean isAdd = userDataBase.insertNewUser(this.name, this.pass, this.addDate, this.aim, this.health, this.typDiet,
-                this.typDiabets, this.age, this.height, this.weight, this.sex, this.lvlActi);
+                this.typDiabets, this.age, this.height, this.weight, this.sex, this.lvlActi, this.kcal);
         if(isAdd == true){
-            Toast.makeText(LvlActivity.getAppContext(),"DOADNO : "+ showUser() ,Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(LvlActivity.getAppContext(),"DOADNO do bazy USER" ,Toast.LENGTH_SHORT).show();
         }else if(isAdd == false){
             Toast.makeText(LvlActivity.getAppContext(),"NIE DODANO",Toast.LENGTH_SHORT).show();
-
         }
     }
 
-    public int getCMP(){
+
+
+    // KCAL wiht aim
+    public int getaimKCAL(){
+        int cmp = getCMP();
+
+        if(this.aim.equals("redukcja")){
+            cmp = (int)(cmp * 0.75);
+
+        }else if(this.aim.equals("utrzymanie")){
+
+        }else if(this.aim.equals("budowanie") && !isHealt() ){
+            cmp = (int)(cmp * 1.25);
+        }
+
+        this.kcal = cmp;
+        return cmp;
+    }
+
+
+
+
+    //KCAL of the day
+    private int getCMP(){
         int cmp = 0;
 
         if( this.health.equals("zdrowy") || this.health.equals("otyły") ){//health or fat
@@ -102,7 +158,6 @@ public class UserCreate {
         }else if(this.health.equals("diabetyk")){// Diabets
             cmp = this.weight * getBMIandActivity();
         }
-        Toast.makeText(LvlActivity.getAppContext(),String.valueOf(cmp),Toast.LENGTH_SHORT).show();
         return cmp;
     }
 
@@ -112,7 +167,7 @@ public class UserCreate {
 
     // if methoth return true, user dont have diabets
     // if methods return false, user have diabets
-    private boolean isHealt(){
+    public boolean isHealt(){
         boolean healhtOrDiabets = true;
         if(this.health.equals("zdrowy")){
             healhtOrDiabets = true;

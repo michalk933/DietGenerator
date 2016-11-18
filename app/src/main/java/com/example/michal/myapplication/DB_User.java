@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DB_User extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "haslaDoGry.db";
+    private static final String DB_NAME = "user.db";
     private static final int BD_VERSION = 1;
 
     public DB_User(Context context) {
@@ -43,9 +43,10 @@ public class DB_User extends SQLiteOpenHelper {
                     + "HEIGHT INTEGER, "
                     + "AGE INTEGER, "
                     + "SEX INTEGER, "
-                    + "LVL_ACTI INTEGER);");
+                    + "LVL_ACTI INTEGER,"
+                    + "KCAL INTEGER);");
 
-            insetsTest(db,"Janusz","Cebula","15.11.2016","Redukcja","fat","carbo",1,86,178,23,1,2);
+            insetsTest(db,"Janusz","Cebula","15.11.2016","Redukcja","fat","carbo",1,86,178,23,1,2,2000);
 
             //ID_USE,Imię,Passwod,Data_Konta,Cel_Diety,Stan_Zdrowia,Typ_Diety ,Typ_Cukrzycy,Waga,Wzrost,Wiek,Poziom_Act
 
@@ -59,7 +60,7 @@ public class DB_User extends SQLiteOpenHelper {
     //Test methot, check using data base
     private static void insetsTest(SQLiteDatabase db,String name,String pass,String date_add,
                                    String aim_diet,String health,String typ_diet,int typ_diabets,
-                                   int weight,int height,int age,int sex, int lvl ){
+                                   int weight,int height,int age,int sex, int lvl ,int kcal){
         ContentValues cv = new ContentValues();
         cv.put("NAME", name);
         cv.put("PASS", pass);
@@ -73,6 +74,7 @@ public class DB_User extends SQLiteOpenHelper {
         cv.put("AGE", age);
         cv.put("SEX", sex);
         cv.put("LVL_ACTI", lvl);
+        cv.put("KCAL", kcal);
         db.insert("USER",null,cv);
 
     }
@@ -81,7 +83,7 @@ public class DB_User extends SQLiteOpenHelper {
     // Hethot add new user into data base
     public boolean insertNewUser(String name,String pass,String date_add,
                                  String aim_diet,String health,String typ_diet,int typ_diabets,
-                                 int weight,int height,int age,int sex,int lvl){
+                                 int weight,int height,int age,int sex,int lvl,int kcal){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -98,6 +100,7 @@ public class DB_User extends SQLiteOpenHelper {
         cv.put("AGE", age);
         cv.put("SEX", sex);
         cv.put("LVL_ACTI", lvl);
+        cv.put("KCAL", kcal);
 
         long result = db.insert("USER",null,cv);
 

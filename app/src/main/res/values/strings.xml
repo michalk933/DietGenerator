@@ -34,6 +34,7 @@
     <string name="title_activity_health">HealthActivity</string>
     <string name="title_activity_personal">PersonalActivity</string>
     <string name="title_activity_lvl">LvlActivity</string>
+    <string name="title_activity_product_list">ProductListActivity</string>
 
 
 </resources>

@@ -16,17 +16,29 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private static UserCreate userCreate;
+    private DietPlan dietPlan;
     private String nameWitheDB;
     private String passWithDB;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private String nameSharedPreferences;
     private String passSharedPreferences;
+    private int kcalWithDB;
+    private String healthWithDB;
+    private String typDietWithDB;
+    private int typDiabetsWithDB;
+
+    private static Context context;
+
+    private TextView KcalTextView,WwTextView,BtextView,TtextView,WWtextView;
+
+
 
 
     @Override
@@ -36,38 +48,30 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //DietPlan
+        MainActivity.context = getApplicationContext();
+
+
         //Creta class with data user
         userCreate = new UserCreate();
 
         // get value with sharedPref
         sharedPreferences = getSharedPreferences("com.example.michal.myapplication", Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         nameSharedPreferences = sharedPreferences.getString("userName","");
         passSharedPreferences = sharedPreferences.getString("userPass","");
 
         //Inicialize Data base
-        try{
-            SQLiteOpenHelper hh = new DB_User(this);
-            SQLiteDatabase db = hh.getReadableDatabase();
-            Cursor cur = db.query("USER", new String[]{"NAME", "PASS"}, "AIM_DIET = ?", new String[]{"Redukcja"}, null, null, null);
-
-            if(cur.moveToFirst()){
-                nameWitheDB = cur.getString(0);
-                passWithDB = cur.getString(1);
-            }
-            cur.close();
-            db.close();
-
-        }catch (SQLiteException e){
-            Toast.makeText(getApplicationContext(), "Błąd bazy dabych", Toast.LENGTH_SHORT).show();
-        }
+        startDataBase();
 
         // User has got account
-        if(nameSharedPreferences.equals(nameWitheDB) && passSharedPreferences.equals(passWithDB) ) {
-            Toast.makeText(getApplicationContext(),nameWitheDB + "  =  "+ nameSharedPreferences + " / " +passWithDB + "  =  "+ passSharedPreferences + "nie odpali bo już jest to w sys",Toast.LENGTH_SHORT).show();
+        if( (nameSharedPreferences.equals(nameWitheDB) && passSharedPreferences.equals(passWithDB)) || ( !nameSharedPreferences.equals("") && !passSharedPreferences.equals("") )) {
+            dietPlan = new DietPlan();
+            changeView(dietPlan.getKcal(), dietPlan.getB(), dietPlan.getT(), dietPlan.getWw());
 
 
             // User hasn't got account
-        }else if(!nameSharedPreferences.equals(nameWitheDB) && !passSharedPreferences.equals(passWithDB)) {
+        }else if( !nameSharedPreferences.equals(nameWitheDB) && !passSharedPreferences.equals(passWithDB) ) {
             Toast.makeText(getApplicationContext(),nameWitheDB + "  !=  "+ nameSharedPreferences + " i halo :" + passWithDB + "  !=  "+ passSharedPreferences,Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, StartMainActivity.class);
             startActivity(intent);
@@ -77,8 +81,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                editor = sharedPreferences.edit();
+                editor.putString("userName", "");
+                editor.putString("userPass", "");
+                editor.commit();
             }
         });
     }
@@ -86,6 +92,55 @@ public class MainActivity extends AppCompatActivity {
     public static UserCreate getUserCreatee(){
         return userCreate;
     }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
+    }
+
+    private void startDataBase(){
+
+        try{
+            SQLiteOpenHelper hh = new DB_User(this);
+            SQLiteDatabase db = hh.getReadableDatabase();
+            Cursor cur = db.query("USER", new String[]{"NAME", "PASS","KCAL","HEALTH","TYP_DIET","TYP_DIABETS"}, "NAME = ?", new String[]{nameSharedPreferences}, null, null, null);
+
+            if(cur.moveToFirst()){
+                nameWitheDB = cur.getString(0);
+                passWithDB = cur.getString(1);
+                kcalWithDB = cur.getInt(2);
+                healthWithDB = cur.getString(3);
+                typDietWithDB = cur.getString(4);
+                typDiabetsWithDB = cur.getInt(5);
+            }
+            cur.close();
+            db.close();
+
+        }catch (SQLiteException e){
+            Toast.makeText(getApplicationContext(), "Błąd bazy dabych", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void changeView(int kcal, int b, int t, int ww){
+        KcalTextView = (TextView)findViewById(R.id.KcalTextView);
+        WwTextView = (TextView)findViewById(R.id.WwTextView);
+        BtextView = (TextView)findViewById(R.id.BtextView);
+        TtextView = (TextView)findViewById(R.id.TtextView);
+        WWtextView = (TextView)findViewById(R.id.WWtextView);
+
+
+        KcalTextView.setText("Kcal : "+String.valueOf(kcal));
+        WwTextView.setText("Węglowodany : "+String.valueOf(ww));
+        BtextView.setText("Białko : "+String.valueOf(b));
+        TtextView.setText("Tłuszcze : "+String.valueOf(t));
+        //WWtextView.setText("Wymiennik węglowodanowy : "+String.valueOf(kcal);
+
+        
+    }
+
+
+
+
 
 
     @Override

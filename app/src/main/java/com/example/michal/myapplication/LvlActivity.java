@@ -1,6 +1,7 @@
 package com.example.michal.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +25,8 @@ public class LvlActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //final DietPlan dietPlan = new DietPlan();
+
         lvlRadioGrup = (RadioGroup)findViewById(R.id.lvlRadioGrup);
         lvlRadioGrup.setOnCheckedChangeListener(changeListenerRadioGrup);
 
@@ -34,10 +37,19 @@ public class LvlActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MainActivity.getUserCreatee().setLvlActi(lvlActi);
+
+                //Chanege kcal in DietPlan class
+                //dietPlan.setKcal(MainActivity.getUserCreatee().getaimKCAL());
+
+                MainActivity.getUserCreatee().getaimKCAL();
                 MainActivity.getUserCreatee().addNewUserDB();
-                
-                MainActivity.getUserCreatee().getCMP();
-                Toast.makeText(getApplicationContext(),MainActivity.getUserCreatee().showUser(),Toast.LENGTH_SHORT).show();
+
+                DietPlan dietPlan = new DietPlan();
+                dietPlan = new DietPlan(MainActivity.getUserCreatee().getaimKCAL(),MainActivity.getUserCreatee().getHealth(),MainActivity.getUserCreatee().getTypDiabets(),MainActivity.getUserCreatee().getTypDiet());
+
+
+                Intent intent = new Intent(LvlActivity.this,MainActivity.class);
+                startActivity(intent);
 
 
             }
