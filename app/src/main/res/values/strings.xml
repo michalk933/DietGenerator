@@ -35,6 +35,18 @@
     <string name="title_activity_personal">PersonalActivity</string>
     <string name="title_activity_lvl">LvlActivity</string>
     <string name="title_activity_product_list">ProductListActivity</string>
+    <string name="add_product">add</string>
+    <string name="list_product">list_product</string>
+    <string name="name_product">Nazwa</string>
+    <string name="producent_product">Producent</string>
+    <string name="typ_product">Typ produktu</string>
+    <string name="kcal_100g">Kcal / 100g</string>
+    <string name="ig">Indeks glikemiczny</string>
+    <string name="ww_100g">Ww / 100g</string>
+    <string name="b_100g">B / 100g</string>
+    <string name="t_100g">T / 100g</string>
+    <string name="ban">Przeciwskazania</string>
+    <string name="add">Add +</string>
 
 
 </resources>

@@ -43,7 +43,7 @@ public class DB_Product extends SQLiteOpenHelper {
                     + "BAN TEXT, "
                     + "DATE_ADD TEXT);");
 
-            //insetsTest(db,"Janusz","Cebula","15.11.2016","Redukcja","fat","carbo",1,86,178,23,1,2,2000);
+            insetsTest(db,"Pierś z kurczaka","Unimięs","Białko",200,0,1,21,1,"Brak","12.12.2016");
 
             //ID_USE,Imię,Passwod,Data_Konta,Cel_Diety,Stan_Zdrowia,Typ_Diety ,Typ_Cukrzycy,Waga,Wzrost,Wiek,Poziom_Act
 
@@ -98,4 +98,6 @@ public class DB_Product extends SQLiteOpenHelper {
             return true;
         }
     }
+
+
 }
