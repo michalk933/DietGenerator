@@ -16,8 +16,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView KcalTextView,WwTextView,BtextView,TtextView,WWtextView;
 
+    private ArrayList<DietPlan> dietList = new ArrayList<>();
+    private mealArrayAdapter mealArrayAdapter ;
+    private ListView planListView;
+
+
+
 
 
 
@@ -50,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
         //DietPlan
         MainActivity.context = getApplicationContext();
+
 
 
         //Creta class with data user
@@ -68,6 +80,20 @@ public class MainActivity extends AppCompatActivity {
         if( (nameSharedPreferences.equals(nameWitheDB) && passSharedPreferences.equals(passWithDB)) || ( !nameSharedPreferences.equals("") && !passSharedPreferences.equals("") )) {
             dietPlan = new DietPlan();
             changeView(dietPlan.getKcal(), dietPlan.getB(), dietPlan.getT(), dietPlan.getWw());
+
+            planListView =(ListView)findViewById(R.id.meatListView);
+            mealArrayAdapter = new mealArrayAdapter(this,dietList);
+            planListView.setAdapter(mealArrayAdapter);
+
+            dietList.add(new DietPlan(1));
+            dietList.add(new DietPlan(2));
+            dietList.add(new DietPlan(3));
+            dietList.add(new DietPlan(4));
+            dietList.add(new DietPlan(5));
+            dietList.add(new DietPlan(6));
+
+
+
 
 
             // User hasn't got account
@@ -134,8 +160,13 @@ public class MainActivity extends AppCompatActivity {
         BtextView.setText("Białko : "+String.valueOf(b));
         TtextView.setText("Tłuszcze : "+String.valueOf(t));
         //WWtextView.setText("Wymiennik węglowodanowy : "+String.valueOf(kcal);
+    }
 
-        
+    private void changeAdapter(){
+
+
+
+
     }
 
 

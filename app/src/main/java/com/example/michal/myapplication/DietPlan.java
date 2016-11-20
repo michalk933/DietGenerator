@@ -30,6 +30,12 @@ public class DietPlan {
         //zapisywanie danych z bazy danych ;)
     }
 
+    public DietPlan(int number_meal){
+        setDietPlane();
+        this.meal = number_meal;
+        //zapisywanie danych z bazy danych ;)
+    }
+
     public DietPlan(int kcal, String healt, int typ, String newtypDiet){
         this.kcal = kcal;
         this.health = healt;
@@ -62,6 +68,10 @@ public class DietPlan {
     }
 
 
+    public int getIncrementMeal(){return (this.meal);}
+    public int getKcalMeal(){
+        return (int)(this.kcal/6);
+    }
     public int getBmail(){
         return (int)(this.B/6);
     }
@@ -70,6 +80,9 @@ public class DietPlan {
     }
     public int getWwmail(){
         return (int)(this.Ww/6);
+    }
+    public int getWymiennikMeal(){
+        return (int)((this.Ww/10)/6);
     }
 
     public void addNewPlanBD(){
