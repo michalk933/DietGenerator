@@ -3,13 +3,21 @@ package com.example.michal.myapplication;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -18,10 +26,14 @@ import java.util.Calendar;
 
 public class AddProductFragment extends DialogFragment {
 
-    private EditText nameProductEditText,producentEditText,typProductEditText,kcalProductEditText,IGEditText,
+    private EditText nameProductEditText,producentEditText,kcalProductEditText,IGEditText,
             WWProductEditText,BProductEditText,TProductEditText,banProductEditText;
 
     private DB_Product product;
+    private String[] elementy = {"Węglowodanowy", "Białkowy", "Tłuszczowy"};
+    private String typProduct = "Węglowodanowy";
+    private String banProduct = "brak";
+
 
 
     @NonNull
@@ -35,7 +47,6 @@ public class AddProductFragment extends DialogFragment {
 
         nameProductEditText = (EditText)addView.findViewById(R.id.nameProductEditText);
         producentEditText = (EditText)addView.findViewById(R.id.producentEditText);
-        typProductEditText = (EditText)addView.findViewById(R.id.typProductEditText);
         kcalProductEditText = (EditText)addView.findViewById(R.id.kcalProductEditText);
         IGEditText = (EditText)addView.findViewById(R.id.IGEditText);
         WWProductEditText = (EditText)addView.findViewById(R.id.WWProductEditText);
@@ -44,13 +55,40 @@ public class AddProductFragment extends DialogFragment {
         banProductEditText = (EditText)addView.findViewById(R.id.banProductEditText);
 
 
+        Spinner spinner = (Spinner)addView.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item,elementy );
+        spinner.setAdapter(adapter1);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                              @Override
+                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                  switch (position){
+                                                      case 0:
+                                                          typProduct = "Węglowodanowy";
+                                                          break;
+                                                      case 1:
+                                                          typProduct = "Białkowy";
+                                                          break;
+
+                                                      case 2:
+                                                          typProduct = "Tłuszczowy";
+                                                          break;
+                                                  }
+
+                                              }
+
+                                              @Override
+                                              public void onNothingSelected(AdapterView<?> parent) {
+
+                                              }
+                                          });
+
 
 
         builder.setPositiveButton("Dodaj", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if((nameProductEditText.equals(""))  || (typProductEditText.equals("")) || (kcalProductEditText.equals("")) ||
-                        (IGEditText.equals("")) || (WWProductEditText.equals("")) || (BProductEditText.equals("")) || (TProductEditText.equals("")) || (banProductEditText.equals(""))){
+                if((nameProductEditText.equals(""))   || (kcalProductEditText.equals("")) || (IGEditText.equals("")) ||
+                        (WWProductEditText.equals("")) || (BProductEditText.equals("")) || (TProductEditText.equals("")) || (banProductEditText.equals(""))){
                     Toast.makeText(getContext(),"Uzupełnij pola",Toast.LENGTH_LONG).show();
 
 
@@ -59,18 +97,20 @@ public class AddProductFragment extends DialogFragment {
                 }else {
                     String name = nameProductEditText.getText().toString();
                     String producent = producentEditText.getText().toString();
-                    String typ = typProductEditText.getText().toString();
+                    String typ = typProduct;
                     int kcal =Integer.parseInt(kcalProductEditText.getText().toString());
                     int ig  = Integer.parseInt(IGEditText.getText().toString());
                     int ww = Integer.parseInt(WWProductEditText.getText().toString());
                     int b = Integer.parseInt(BProductEditText.getText().toString());
                     int t = Integer.parseInt(TProductEditText.getText().toString());
-                    String ban = banProductEditText.getText().toString();
+                    banProduct = banProductEditText.getText().toString();
+                    String ban = banProduct;
                     String date = getTadaAdduser();
 
 
                     product = new DB_Product(getContext());
                     boolean isAdd = product.insertNewProduct(name,producent,typ,kcal,ig,ww,b,t,ban,date);
+
 
                     if(isAdd){
                         Toast.makeText(getContext(),"Dodano produkt",Toast.LENGTH_LONG).show();
@@ -78,11 +118,10 @@ public class AddProductFragment extends DialogFragment {
                         Toast.makeText(getContext(),"Nie dodano",Toast.LENGTH_LONG).show();
                     }
 
+
                 }
             }
         });
-
-
 
         return builder.create();
     }
@@ -98,6 +137,5 @@ public class AddProductFragment extends DialogFragment {
 
         return String.valueOf(day +":"+month+":"+year);
     }
-
 
 }

@@ -35,14 +35,20 @@ public class ProductListActivity extends AppCompatActivity {
         ProductListActivity.context = getApplicationContext();
         listView = (ListView)findViewById(R.id.productListView);
 
-
         try {
             SQLiteOpenHelper helper = new DB_Product(this);
             SQLiteDatabase db = helper.getReadableDatabase();
 
+            cursor = db.query("PRODUCT", new String[]{"NAME", "KCAL_G", "IG", "WW_G", "B_G", "T_G"}, null, null, null, null, null);
+            //paa = new productArrayAdapter(ProductListActivity.this);
+
             Cursor cu = db.rawQuery("SELECT  * FROM PRODUCT", null);
             productArrayAdapter p = new productArrayAdapter(this,cu,0);
             listView.setAdapter(p);
+
+
+
+
 
             cursor.close();
             db.close();
@@ -76,5 +82,9 @@ public class ProductListActivity extends AppCompatActivity {
     public static Context getAppContext() {
         return ProductListActivity.context;
     }
+
+
+
+
 
 }

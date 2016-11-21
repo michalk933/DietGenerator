@@ -50,12 +50,12 @@ public class productArrayAdapter extends CursorAdapter {
 
 
 
-        nameListProductTextView.setText(cursor.getString(cursor.getColumnIndexOrThrow("NAME")));
-        kcalListProductTextView.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("KCAL_G"))));
-        igListProductTextView.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("IG"))));
-        WWListProductTextView.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("WW_G"))));
-        BListProductTextView.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("B_G"))));
-        TListProductTextView.setText(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("T_G"))));
+        nameListProductTextView.setText("Nazwa : " + cursor.getString(cursor.getColumnIndexOrThrow("NAME")));
+        kcalListProductTextView.setText("Kcal /100g : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("KCAL_G"))));
+        igListProductTextView.setText("IG : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("IG"))));
+        WWListProductTextView.setText("Węglowodanów /100g : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("WW_G"))));
+        BListProductTextView.setText("Białka /100g : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("B_G"))));
+        TListProductTextView.setText("Tłuszczy /100g : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("T_G"))));
 
 
     }
