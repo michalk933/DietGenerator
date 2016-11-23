@@ -200,7 +200,6 @@ public class UserCreate {
         return (this.lvlActi == 1 || this.lvlActi == 2) ? 300 : 400;
     }
 
-
     private int getTEF(int bmr){
         return (int)(bmr * 0.1);
     }
@@ -247,7 +246,7 @@ public class UserCreate {
 
         return result;
     }
-
+//http://www.pracuj.pl/praca/programista-java-katowice,oferta,4945819?utm_source=rekomendacje&utm_medium=email&sendid=600c1020-bc67-414e-9d79-3a5831ce5ad2&send_date=2016-11-22&rfn=startDate&utm_campaign=prog_tags_no_aplly_6_mail2
 
 
 

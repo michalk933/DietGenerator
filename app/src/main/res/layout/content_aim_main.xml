@@ -14,6 +14,12 @@
     tools:showIn="@layout/activity_aim_main"
     android:orientation="vertical">
 
+    <TextView
+        android:text="@string/aim_component"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

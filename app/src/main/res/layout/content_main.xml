@@ -22,7 +22,7 @@
         android:columnCount="3"
         android:layout_marginTop="16dp">
         <TextView
-            android:text="Kcal : "
+            android:text="@string/kcal_TV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/KcalTextView"

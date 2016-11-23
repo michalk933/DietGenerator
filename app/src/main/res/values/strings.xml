@@ -47,6 +47,8 @@
     <string name="t_100g">T / 100g</string>
     <string name="ban">Przeciwskazania</string>
     <string name="add">Add +</string>
+    <string name="aim_component">Cel :</string>
+    <string name="kcal_TV">Kcal :</string>
 
 
 </resources>
