@@ -28,11 +28,13 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -59,6 +61,9 @@ public class AddProductFragment extends DialogFragment {
     private ImageView imageView;
     private static final int REQUEST_CODE = 1;
     private static final int CAMERA_REQUEST = 1888;
+
+
+    byte[] bytes;
 
 
 
@@ -92,8 +97,6 @@ public class AddProductFragment extends DialogFragment {
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
             }
         });
-
-
 
 
         Spinner spinner = (Spinner)addView.findViewById(R.id.spinner);
@@ -150,7 +153,7 @@ public class AddProductFragment extends DialogFragment {
 
 
                     product = new DB_Product(getContext());
-                    boolean isAdd = product.insertNewProduct(name,producent,typ,kcal,ig,ww,b,t,ban,date);
+                    boolean isAdd = product.insertNewProduct(name,producent,typ,kcal,ig,ww,b,t,ban,date,bytes);
 
 
                     if(isAdd){
@@ -185,11 +188,20 @@ public class AddProductFragment extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_REQUEST) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photo);
+            //imageView.setImageBitmap(photo);
+
+            bytes = getBytes(photo);
         }
     }
 
-
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
 
 
 }

@@ -41,9 +41,14 @@ public class DB_Product extends SQLiteOpenHelper {
                     + "B_G INTEGER, "
                     + "T_G INTEGER, "
                     + "BAN TEXT, "
-                    + "DATE_ADD TEXT);");
+                    + "DATE_ADD TEXT, "
+                    + "IMG BLOB);");
 
-            insetsTest(db,"Pierś z kurczaka","Unimięs","Białko",200,0,1,21,1,"Brak","12.12.2016");
+            byte[] by = new byte[2];
+           // by[0] = 0;
+           // by[1] = 1;
+
+            insetsTest(db,"Pierś z kurczaka","Unimięs","Białko",200,0,1,21,1,"Brak","12.12.2016",by);
 
             //ID_USE,Imię,Passwod,Data_Konta,Cel_Diety,Stan_Zdrowia,Typ_Diety ,Typ_Cukrzycy,Waga,Wzrost,Wiek,Poziom_Act
 
@@ -55,7 +60,7 @@ public class DB_Product extends SQLiteOpenHelper {
 
 
     //Test methot, check using data base
-    private static void insetsTest(SQLiteDatabase db,String name,String producent, String type,int kcal_g, int ig, int ww_g, int b_g,int t_g,String ban,String date){
+    private static void insetsTest(SQLiteDatabase db,String name,String producent, String type,int kcal_g, int ig, int ww_g, int b_g,int t_g,String ban,String date, byte[] b){
         ContentValues cv = new ContentValues();
         cv.put("NAME", name);
         cv.put("PRODUCENT", producent);
@@ -67,6 +72,7 @@ public class DB_Product extends SQLiteOpenHelper {
         cv.put("T_G", t_g);
         cv.put("BAN", ban);
         cv.put("DATE_ADD", date);
+        cv.put("IMG", b);
 
         db.insert("PRODUCT",null,cv);
 
@@ -74,7 +80,7 @@ public class DB_Product extends SQLiteOpenHelper {
 
 
     // Hethot add new user into data base
-    public boolean insertNewProduct(String name,String producent, String type,int kcal_g, int ig, int ww_g, int b_g,int t_g,String ban,String date){
+    public boolean insertNewProduct(String name,String producent, String type,int kcal_g, int ig, int ww_g, int b_g,int t_g,String ban,String date,byte[] b){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -89,6 +95,7 @@ public class DB_Product extends SQLiteOpenHelper {
         cv.put("T_G", t_g);
         cv.put("BAN", ban);
         cv.put("DATE_ADD", date);
+        cv.put("IMG", b);
 
         long result = db.insert("PRODUCT",null,cv);
 

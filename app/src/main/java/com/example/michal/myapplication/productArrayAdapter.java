@@ -2,11 +2,14 @@ package com.example.michal.myapplication;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,14 +32,10 @@ public class productArrayAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return cursorInflater.from(context).inflate(R.layout.product_list,parent,false);
     }
-//return LayoutInflater.from(context).inflate(R.layout.item_todo, parent, false);
 
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-
-
-
 
         TextView nameListProductTextView = (TextView) view.findViewById(R.id.nameListProductTextView);
         TextView kcalListProductTextView = (TextView) view.findViewById(R.id.kcalListProductTextView);
@@ -44,12 +43,12 @@ public class productArrayAdapter extends CursorAdapter {
         TextView WWListProductTextView = (TextView) view.findViewById(R.id.WWListProductTextView);
         TextView BListProductTextView = (TextView) view.findViewById(R.id.BListProductTextView);
         TextView TListProductTextView = (TextView) view.findViewById(R.id.TListProductTextView);
+        ImageView imageViewProduct = (ImageView) view.findViewById(R.id.imageViewProduct);
 
 
+        Bitmap bitmap = getImage(cursor.getBlob(cursor.getColumnIndexOrThrow("IMG")));
 
-
-
-
+        imageViewProduct.setImageBitmap(bitmap);
         nameListProductTextView.setText("Nazwa : " + cursor.getString(cursor.getColumnIndexOrThrow("NAME")));
         kcalListProductTextView.setText("Kcal /100g : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("KCAL_G"))));
         igListProductTextView.setText("IG : " + String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("IG"))));
@@ -59,4 +58,10 @@ public class productArrayAdapter extends CursorAdapter {
 
 
     }
+
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
+
+
 }

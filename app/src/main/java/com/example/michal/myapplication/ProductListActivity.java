@@ -44,7 +44,7 @@ public class ProductListActivity extends AppCompatActivity {
             SQLiteOpenHelper helper = new DB_Product(this);
             SQLiteDatabase db = helper.getReadableDatabase();
 
-            cursor = db.query("PRODUCT", new String[]{"NAME", "KCAL_G", "IG", "WW_G", "B_G", "T_G"}, null, null, null, null, null);
+            cursor = db.query("PRODUCT", new String[]{"NAME", "KCAL_G", "IG", "WW_G", "B_G", "T_G","IMG"}, null, null, null, null, null);
             //paa = new productArrayAdapter(ProductListActivity.this);
 
             Cursor cu = db.rawQuery("SELECT  * FROM PRODUCT", null);
